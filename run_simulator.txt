@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-user=philb@umich.edu
+#SBATCH --output=/home/philb/SeamlessTrials/out_message/%A_%a.out
+#SBATCH --error=/home/philb/SeamlessTrials/out_message/%A_%a.err
+
+#SBATCH --job-name=seamless
+#SBATCH --time=30:00
+#SBATCH --mem-per-cpu=2500
+#SBATCH --array=1-910
+#SBATCH --cpus-per-task=2
+#SBATCH --nodes=1-1
+
+Rscript --vanilla /home/philb/SeamlessTrials/run_simulator.R
