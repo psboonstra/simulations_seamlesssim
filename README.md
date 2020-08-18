@@ -1,6 +1,5 @@
----
-title: "Executive summary"
----
+
+# Executive summary
 
 This repository contains instructions and code for running the simulation study and creating the figures presented in Boonstra, Braun, and Chase (2020). It makes use of the `seamlesssim` R package which is available in a separate repository (https://github.com/elizabethchase/seamlesssim). You can install and load this package with the following command (it will take a few minutes to compile) :
 
