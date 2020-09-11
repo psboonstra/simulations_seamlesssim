@@ -4,7 +4,7 @@
 The repository located at https://github.com/psboonstra/simulations_seamlesssim contains instructions and code for running the simulation study and creating the figures presented in Boonstra, Braun, and Chase (2020). It makes use of the `seamlesssim` R package, which is available in a separate repository (https://github.com/elizabethchase/seamlesssim). **The `seamlesssim` package is standalone, whereas the scripts in the `simulations_seamlesssim` (this repository) are only useful if you want to rerun the simulation study in Boonstra, Braun, and Chase (2020)** You must first install and load the `seamlesssim` R package by running the following commands in your local R session with an active internet connection (it will take a few minutes to compile) :
 
 ```r
-if(require(devtools)) {
+if(!require(devtools)) {
   install.packages("devtools")
 }
 devtools::install_github("elizabethchase/seamlesssim")
