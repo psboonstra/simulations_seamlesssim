@@ -1,7 +1,7 @@
 
-# `simulations_seamlesssim` summary
+# `simulations_seamlesssim` Summary
 
-The repository located at https://github.com/psboonstra/simulations_seamlesssim contains instructions and code for running the simulation study and creating the figures presented in Boonstra, Braun, and Chase (2020). It makes use of the `seamlesssim` R package, which is available in a separate repository (https://github.com/elizabethchase/seamlesssim). **The `seamlesssim` package is standalone, whereas the scripts in the `simulations_seamlesssim` (this repository) are only useful if you want to rerun the simulation study in Boonstra, Braun, and Chase (2020)** You must first install and load the `seamlesssim` R package by running the following commands in your local R session with an active internet connection (it will take a few minutes to compile) :
+The repository located at https://github.com/psboonstra/simulations_seamlesssim contains instructions and code for running the simulation study and creating the figures presented in Boonstra, Braun, and Chase (2020). It makes use of the `seamlesssim` R package, which is available in a separate repository (https://github.com/elizabethchase/seamlesssim). **The `seamlesssim` package is standalone, whereas the scripts in `simulations_seamlesssim` (this repository) are only useful if you want to rerun the simulation study in Boonstra, Braun, and Chase (2020)** You must first install and load the `seamlesssim` R package by running the following commands in your local R session with an active internet connection (it will take a few minutes to compile) :
 
 ```r
 if(!require(devtools)) {
@@ -16,7 +16,12 @@ Then, follow the instructions below to recreate the simulation study.
 
 ### Step 0: `0gen_params_paper.R`
 
-This script creates the generating data models (called scenarios in the manuscript), the designs to run against each scenario, and other details regarding the simulation study. This will be called internally in the next step, so you can leave this alone if you just want to re-create the simulation study exactly as in the manuscript. 
+This script creates the generating data models (called scenarios in the manuscript), the designs to run against each scenario, and other details regarding the simulation study. The specific output is an object named `arglist`, which is a list
+as long as the number of unique generating data models. Each element of this 
+top-level list is itself a named list, containing the all of the named arguments
+necessary for the `twostage_simulator` function in the `seamlesssim` package.
+
+This script will be called by the script in the next step, so you can leave this alone if you just want to re-create the simulation study exactly as in the manuscript. 
 
 ### Step 1: `1run_simulator.R`
 

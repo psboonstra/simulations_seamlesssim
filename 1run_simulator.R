@@ -26,12 +26,12 @@ if(running_on_slurm) {
 } else {
   rstan_options(auto_write = TRUE);
   array_id = 9;
-  n_sim = 2;
+  n_sim = 10;
 }
 
 # Load the simulation settings ----
 protect_objects = ls()
-source("gen_params_paper.R");
+source("0gen_params_paper.R");
 rm(list = setdiff(ls(all = T), c("arglist",protect_objects)));
 
 # Run simulations ----
@@ -42,7 +42,6 @@ curr_args$random_seed = curr_args$random_seed + array_id
 begin = Sys.time();
 foo = do.call(twostage_simulator, args = curr_args);
 Sys.time() - begin;
-
 
 # Save the results ----
 file_name = paste0(write_to_folder,"PatientData",array_id,".csv");

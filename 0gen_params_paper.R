@@ -4,7 +4,7 @@ if(!"do_efficient_simulation"%in%ls()) {
   do_efficient_simulation = T;
 }
 if(!"n_sim"%in%ls()) {
-  n_sim = ifelse(do_efficient_simulation,11,11);
+  n_sim = ifelse(do_efficient_simulation, 22, 22);
 }
 
 if(!"n_mc_warmup"%in%ls()) {n_mc_warmup = 1e3;}
@@ -66,7 +66,7 @@ design_list = list(
       prior_n_per = 1,
       include_stage1_data = T
     ),
-    module4 = list(
+    module3 = list(
       pretty_name = "DEC",
       name = "empiric", 
       n = 35,
@@ -74,7 +74,7 @@ design_list = list(
       first_patient_look = 10,
       thresh_decrease = 0.33
     ),
-    module5 = list(
+    module4 = list(
       pretty_name = "Bayes",
       name = "bayes",
       prob_threshold = 0.38,
@@ -90,7 +90,7 @@ design_list = list(
       name = "3pl3", 
       starting_dose = 1
     ),
-    module4 = list(
+    module3 = list(
       pretty_name = "DEC",
       name = "empiric", 
       n = 35,
@@ -98,7 +98,7 @@ design_list = list(
       first_patient_look = 10,
       thresh_decrease = 0.33
     ),
-    module5 = list(
+    module4 = list(
       pretty_name = "Bayes",
       name = "bayes",
       prob_threshold = 0.43,
@@ -114,7 +114,7 @@ design_list = list(
       name = "3pl3", 
       starting_dose = 1
     ),
-    module4 = list(
+    module3 = list(
       pretty_name = "DEC",
       name = "empiric", 
       n = 35,
@@ -122,7 +122,7 @@ design_list = list(
       first_patient_look = 10,
       thresh_decrease = 0.33
     ),
-    module5 = list(
+    module4 = list(
       pretty_name = "BIsoReg",
       name = "bayes_isoreg",
       prob_threshold = 0.55,
@@ -151,12 +151,12 @@ design_list = list(
       prior_n_per = 1,
       include_stage1_data = T
     ),
-    module4 = list(
+    module3 = list(
       pretty_name = "CRM", 
       name = "continue_crm", 
       n = 35
     ),
-    module5 = list(
+    module4 = list(
       pretty_name = "Bayes", 
       name = "bayes",
       prob_threshold = 0.75,
@@ -178,12 +178,12 @@ design_list = list(
       dose_cohort_size_first_only = T,
       earliest_stop = 6
     ),
-    module4 = list(
+    module3 = list(
       pretty_name = "CRM", 
       name = "continue_crm", 
       n = 35
     ),
-    module5 = list(
+    module4 = list(
       pretty_name = "Bayes", 
       name = "bayes",
       prob_threshold = 0.83,
@@ -204,12 +204,12 @@ design_list = list(
       dose_cohort_size_first_only = T,
       earliest_stop = 6
     ),
-    module4 = list(
+    module3 = list(
       pretty_name = "CRM", 
       name = "continue_crm", 
       n = 35
     ),
-    module5 = list(
+    module4 = list(
       pretty_name = "BIsoReg", 
       name = "bayes_isoreg",
       prob_threshold = 0.87,
@@ -223,16 +223,25 @@ make_design_label = function(design) {
   foo <- 
     map_chr(design, function(x) {x$pretty_name});
   
-  if(length(foo) < 5) {
-    empty_names = rep(" ", 5 - length(foo));
-    names(empty_names) = setdiff(paste0("module", 1:5), names(foo))
+  if(length(foo) < 4) {
+    empty_names = rep("none", 4 - length(foo));
+    names(empty_names) = setdiff(paste0("module", 1:4), names(foo))
     foo <- c(foo, empty_names)
   } 
   foo <- foo[order(names(foo))]
   paste0(foo, collapse = ":")
 }
 
+# extract 'pretty_name' to use as design labels
 design_labels = map_chr(design_list, make_design_label)
+
+remove_pretty_name = function(design) {
+    map(design, function(x) {x[setdiff(names(x), "pretty_name")]});
+}
+
+# extract 'pretty_name' to use as design labels
+design_list = map(design_list, remove_pretty_name)
+
 
 if(!"arglist"%in%ls()) {
   arglist = list();
@@ -241,6 +250,13 @@ if(!"arglist"%in%ls()) {
 random_seeds = sample(.Machine$integer.max - 1e4,length(dose_outcome_curves_list));
 
 for(k in 1:length(dose_outcome_curves_list)) {
+  
+  sim_labels = 1:n_sim;
+  
+  if(exists("array_id")) {
+    sim_labels = sim_labels + n_sim * floor((array_id - 1) / sim_label_restart) 
+  } 
+  
   assign(paste("sim",k,".params",sep=""),list(array_id = NA,
                                               n_sim = n_sim,
                                               primary_objectives = primary_objectives,
@@ -257,7 +273,7 @@ for(k in 1:length(dose_outcome_curves_list)) {
                                                 mc_max_treedepth = 18,
                                                 ntries = 1
                                               ),
-                                              sim_labels = ifelse(exists("array_id"), (1:n_sim) + n_sim * floor((array_id - 1) / sim_label_restart), 1:n_sim),
+                                              sim_labels = sim_labels,
                                               design_labels = design_labels,
                                               do_efficient_simulation = do_efficient_simulation,
                                               random_seed = random_seeds[k]))
