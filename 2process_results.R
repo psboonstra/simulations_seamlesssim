@@ -1,18 +1,10 @@
-library(lubridate);
-library(dfcrm);
-library(rstan);
-library(binom);
 library(tidyverse);
 library(cowplot);
-library(RColorBrewer);
 
 if(!require(seamlesssim)) {
   devtools::install_github("elizabethchase/seamlesssim")
   library(seamlesssim); 
 }
-
-#script <- RCurl::getURL("https://raw.githubusercontent.com/psboonstra/seamlesssim/master/R/twostage_results.R", ssl.verifypeer = FALSE)
-#eval(parse(text = script))
 
 write_to_folder = "out";
 

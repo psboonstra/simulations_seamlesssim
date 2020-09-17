@@ -1,3 +1,12 @@
+---
+title: "Simulation study in Boonstra, Braun, and Chase (2020)"
+author: "Philip S. Boonstra, Elizabeth C. Chase"
+date: "17-Sept-2020"
+geometry: margin=1.5cm
+output: 
+  pdf_document: default
+  word_document: default
+---
 
 # `simulations_seamlesssim` Summary
 
@@ -35,4 +44,4 @@ After all of the jobs complete, download the `out` folder to your local machine 
 
 ### Step 2:  `2process_results.R`
 
-Open R on your machine and run the script `2process_results.R`. This will create the figures that are presented in the manuscript. 
+At this point, you should have a local folder called `out` that lives in your `.Rproj` directory. Now open the RStudio project on your machine and run this script, e.g. `source(2process_results.R)`. This will create the figures that are presented in the manuscript and save them as png files in this directory. 

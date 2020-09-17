@@ -1,5 +1,4 @@
 
-
 if(!"do_efficient_simulation"%in%ls()) {
   do_efficient_simulation = T;
 }
@@ -179,7 +178,7 @@ design_list = list(
       earliest_stop = 6
     ),
     module3 = list(
-      pretty_name = "CRM", 
+      pretty_name = "none", 
       name = "continue_crm", 
       n = 35
     ),
@@ -205,7 +204,7 @@ design_list = list(
       earliest_stop = 6
     ),
     module3 = list(
-      pretty_name = "CRM", 
+      pretty_name = "none", 
       name = "continue_crm", 
       n = 35
     ),
